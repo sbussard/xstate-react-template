@@ -1,7 +1,7 @@
 import * as React from 'react';
 import './styles.scss';
 
-export default ({ methods, isOn, parent }: any) => (
+export default ({ methods, isOn, logInstance }: any) => (
   <div className="Authentication">
     <h2>{isOn ? 'On' : 'Off'}</h2>
     {Object.keys(methods).map((type) => (
@@ -9,12 +9,6 @@ export default ({ methods, isOn, parent }: any) => (
         {type}
       </button>
     ))}
-    Parent methods:
-    <br />
-    {Object.keys(parent.methods).map((type) => (
-      <button key={type} onClick={parent.methods[type]}>
-        {type}
-      </button>
-    ))}
+    <button onClick={logInstance}>Instance</button>
   </div>
 );

@@ -2,24 +2,19 @@ import { Machine } from 'xstate';
 import makeStateHook from 'src/utility/makeStateHook';
 
 const machine = Machine({
-  id: 'authentication',
-  initial: 'POWERED_OFF',
+  id: 'Power',
+  initial: 'OFF',
   states: {
-    POWERED_OFF: {
-      on: { turnOn: 'POWERED_ON' },
+    OFF: {
+      on: { turnOn: 'ON' },
     },
-    POWERED_ON: {
-      on: { turnOff: 'POWERED_OFF' },
+    ON: {
+      on: { turnOff: 'OFF' },
     },
   },
 });
 
-export default makeStateHook(
-  machine,
-  ({ state }: any) => ({
-    isOn: state.matches('POWERED_ON'),
-  }),
-  () => ({
-    fries: 4,
-  })
-);
+export default makeStateHook(machine, ({ state, instance }: any) => ({
+  isOn: state.matches('ON'),
+  logInstance: () => console.log(instance),
+}));

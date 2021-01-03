@@ -2,7 +2,7 @@ import { Machine } from 'xstate';
 import makeStateHook from 'src/utility/makeStateHook';
 
 const machine = Machine({
-  id: 'authentication',
+  id: 'Authentication',
   initial: 'INITIAL',
   context: {
     username: '',
@@ -17,12 +17,7 @@ const machine = Machine({
   },
 });
 
-export default makeStateHook(
-  machine,
-  ({ state }: any) => ({
-    isAuthenticated: state.matches('AUTHENTICATED'),
-  }),
-  ({ state }) => ({
-    username: state.context.username,
-  })
-);
+export default makeStateHook(machine, ({ state, instance }: any) => ({
+  isAuthenticated: state.matches('AUTHENTICATED'),
+  logInstance: () => console.log(instance),
+}));
