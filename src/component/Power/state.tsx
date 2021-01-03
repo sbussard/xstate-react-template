@@ -14,7 +14,8 @@ const machine = Machine({
   },
 });
 
-export default makeStateHook(machine, ({ state, instance }: any) => ({
+export default makeStateHook(machine, ({ state, instance, App }: any) => ({
   isOn: state.matches('ON'),
   logInstance: () => console.log(instance),
+  signOut: App.Authentication.signOut,
 }));
