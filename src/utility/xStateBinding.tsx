@@ -19,7 +19,7 @@ function setValue(obj: any, path: string[], value: any) {
   node[path[0]] = value;
 }
 
-export default (machine: any, extension = (_: any) => ({})) => (
+export const makeStateHook = (machine: any, extension = (_: any) => ({})) => (
   parent?: any
 ) => {
   const [state, send] = useMachine(machine);
@@ -40,3 +40,9 @@ export default (machine: any, extension = (_: any) => ({})) => (
 
   return Object.assign({}, instance, extension(instance));
 };
+
+export const connectView = (View: any, useStateHook: any) => ({
+  parent,
+}: {
+  parent?: any;
+}) => <View {...useStateHook(parent)} />;
