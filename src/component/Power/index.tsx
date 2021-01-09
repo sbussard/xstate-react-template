@@ -1,8 +1,22 @@
-import { Machine } from 'xstate';
+import { EventObject, MachineConfig } from 'xstate';
 import bind from 'src/utility/xStateBinding';
 import View from './view';
 
-const machine = Machine({
+interface IContext {}
+
+interface ISchema {
+  states: {
+    OFF: {};
+    ON: {};
+  };
+}
+
+interface IEvent extends EventObject {
+  data: any;
+  type: 'turnOn' | 'turnOff';
+}
+
+const configuration: MachineConfig<IContext, ISchema, IEvent> = {
   id: 'Power',
   initial: 'OFF',
   states: {
@@ -13,10 +27,9 @@ const machine = Machine({
       on: { turnOff: 'OFF' },
     },
   },
-});
+};
 
-export default bind(machine, View, ({ state, instance, App }: any) => ({
-  isOn: state.matches('ON'),
+export default bind(configuration, View, ({ state, instance }: any) => ({
+  isAuthenticated: state.matches('AUTHENTICATED'),
   logInstance: () => console.log(instance),
-  signOut: App.Authentication.signOut,
 }));

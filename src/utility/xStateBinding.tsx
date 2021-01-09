@@ -1,12 +1,12 @@
 import { useMachine } from '@xstate/react';
-import { EventObject } from 'xstate';
+import { EventObject, Machine } from 'xstate';
 
 export default (machine: any, View: any, extension: any) => ({
   parent,
 }: {
   parent?: any;
 }) => {
-  const [state, send] = useMachine(machine);
+  const [state, send] = useMachine(Machine(machine));
   const methods: any = {};
   for (let type of state.nextEvents) {
     methods[type] = (data: any) => send({ type, data } as EventObject);
