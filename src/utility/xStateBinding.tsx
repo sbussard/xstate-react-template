@@ -32,9 +32,7 @@ export default (machine: any, View: any, extension: any) => ({
     if (!(location in node)) node[location] = {};
     node = node[location];
   }
-  node[path[0]] = { state, ...methods };
+  node[split[0]] = { state, ...methods };
 
-  const data = Object.assign({}, instance, extension(instance));
-
-  return <View {...data} />;
+  return <View {...Object.assign(extension(instance), instance)} />;
 };
