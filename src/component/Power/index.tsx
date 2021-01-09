@@ -29,7 +29,8 @@ const configuration: MachineConfig<IContext, ISchema, IEvent> = {
   },
 };
 
-export default bind(configuration, View, ({ state, instance }: any) => ({
-  isAuthenticated: state.matches('AUTHENTICATED'),
+export default bind(configuration, View, ({ state, instance, App }: any) => ({
+  isOn: state.matches('ON'),
   logInstance: () => console.log(instance),
+  signOut: App.Authentication.signOut,
 }));
