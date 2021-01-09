@@ -1,5 +1,5 @@
 import { Machine } from 'xstate';
-import { makeStateHook, connectView } from 'src/utility/xStateBinding';
+import bind from 'src/utility/xStateBinding';
 import View from './view';
 
 const machine = Machine({
@@ -18,10 +18,7 @@ const machine = Machine({
   },
 });
 
-export default connectView(
-  View,
-  makeStateHook(machine, ({ state, instance }: any) => ({
-    isAuthenticated: state.matches('AUTHENTICATED'),
-    logInstance: () => console.log(instance),
-  }))
-);
+export default bind(machine, View, ({ state, instance }: any) => ({
+  isAuthenticated: state.matches('AUTHENTICATED'),
+  logInstance: () => console.log(instance),
+}));
